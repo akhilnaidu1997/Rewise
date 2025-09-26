@@ -7,9 +7,13 @@ if [ $USER -ne 0 ]; then
     exit 1
 fi
 
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo " ERROR: Installation of $2 is failed"
+    else
+        echo "$2 Installation is successful"
+    fi
+}
+
 dnf install nginx -y
-if [ $? -ne 0 ]; then
-    echo " ERROR: Installation is failed"
-else
-    echo "Installation is successful"
-fi
+VALIDATE $? "NGINX"
