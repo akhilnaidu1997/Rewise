@@ -14,3 +14,19 @@ if [ $? -ne 0 ]; then
 else
     echo " MYSQL is already installed"
 fi
+
+dnf install nginx -y
+
+if [ $? -ne 0 ]; then
+    echo "Installation of nginx failed"
+else
+    echo " nginx is already installed"
+fi
+
+dnf install python3 -y
+
+if [ $? -ne 0 ]; then
+    echo "Installation of python failed"
+else
+    echo " python is already installed"
+fi
