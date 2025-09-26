@@ -1,16 +1,21 @@
 #!/bin/bash
 
+R="\e[31m" #color codes for each color in shell script
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
 USER=$(id -u)
 if [ $USER -ne 0 ]; then
-    echo "ERROR: you donot have sudo permissions to install"
+    echo -e "$Ryou donot have sudo permissions to install$N"
     exit 1
 fi
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo "ERROR:: Installation of $2 is failed"
+        echo -e "ERROR:: Installation of $2 is $R failed $N"
     else
-        echo "Installation of $2 is successful"
+        echo -e "Installation of $2 is $G successful $N"
 fi
 }
 
@@ -19,7 +24,7 @@ if [ $? -ne 0 ]; then
     dnf install mysql -y
     VALIDATE $? "mysql" 
 else
-    echo " Mysql is already installed ... Skipping"
+    echo " Mysql is already installed ... $Y Skipping $N"
 fi
 
 dnf list installed nginx 
@@ -27,7 +32,7 @@ if [ $? -ne 0 ]; then
     dnf install nginx -y
     VALIDATE $? "nginx"
 else
-    echo "nginx is already installed ... Skipping"
+    echo "nginx is already installed ... $Y Skipping $N"
 fi
 
 dnf list installed python3
@@ -35,6 +40,6 @@ if [ $? -ne 0 ]; then
     dnf install python3 -y
     VALIDATE $? "python3" 
 else
-    echo "Python3 is already installed ... Skipping"
+    echo "Python3 is already installed ...$Y Skipping $N"
 fi
 
