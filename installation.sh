@@ -1,17 +1,22 @@
 #!/bin/bash
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
 USER=$(id -u)
 
 if [ $USER -ne 0 ]; then
-    echo "ERROR:: Please proceed with sudo permissions"
+    echo -e "Please proceed with $R sudo permissions $N"
     exit 1
 fi
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo "Installation of $2 failed"
+        echo -e "Installation of $2 $R failed $N"
     else
-        echo " $2 is already installed"
+        echo -e " $2 is already $Y installed $N"
 fi
 }
 
@@ -21,7 +26,7 @@ if [ $? -ne 0 ]; then
     dnf install mysql -y
     VALIDATE $? "MYSQL"
 else
-    echo "MYSQL already installed successfully"
+    echo -e "MYSQL already $Y installed $N"
 fi
 
 dnf list installed nginx
@@ -29,7 +34,7 @@ if [ $? -ne 0 ]; then
     dnf install nginx -y
     VALIDATE $? "NGINX"
 else
-    echo "NGINX already installed "
+    echo -e "NGINX already $Y installed $N"
 fi
 
 dnf list installed python3
@@ -37,5 +42,5 @@ if [ $? -ne 0 ]; then
     dnf install python3 -y
     VALIDATE $? "PYTHON"
 else
-    echo "PYTHON already installed"
+    echo -e "PYTHON already $Y installed $N"
 fi
