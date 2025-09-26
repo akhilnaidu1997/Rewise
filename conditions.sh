@@ -7,14 +7,20 @@ if [ $USER -ne 0 ]; then
 fi
 
 VALIDATE(){
-    if [ $? -ne 0 ]; then
-        echo "ERROR:: Installation of mysql is failed"
+    if [ $1 -ne 0 ]; then
+        echo "ERROR:: Installation of $2 is failed"
     else
-        echo "Installation of mysql is successful"
+        echo "Installation of $2 is successful"
 fi
 }
 
 dnf install mysql -y
-VALIDATE 
+VALIDATE $? "mysql" 
+
+dnf install nginx -y
+VALIDATE $? "nginx" 
+
+dnf install python3 -y
+VALIDATE $? "python3" 
 
 
