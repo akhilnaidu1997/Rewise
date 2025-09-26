@@ -7,26 +7,19 @@ if [ $USER -ne 0 ]; then
     exit 1
 fi
 
-dnf install mysql -y
-
-if [ $? -ne 0 ]; then
-    echo "Installation of mysql failed"
-else
-    echo " MYSQL is already installed"
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo "Installation of $2 failed"
+    else
+        echo " $2 is already installed"
 fi
+}
+
+dnf install mysql -y
+VALIDATE $? "MYSQL"
 
 dnf install nginx -y
-
-if [ $? -ne 0 ]; then
-    echo "Installation of nginx failed"
-else
-    echo " nginx is already installed"
-fi
+VALIDATE $? "NGINX"
 
 dnf install python3 -y
-
-if [ $? -ne 0 ]; then
-    echo "Installation of python failed"
-else
-    echo " python is already installed"
-fi
+VALIDATE $? "PYTHON"
