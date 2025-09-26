@@ -4,6 +4,7 @@ USER=$(id -u)
 
 if [ $USER -ne 0 ]; then
     echo "ERROR:: Please proceed with sudo permissions"
+    exit 1
 fi
 
 dnf install mysql -y
