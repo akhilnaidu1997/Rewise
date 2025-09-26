@@ -6,10 +6,15 @@ if [ $USER -ne 0 ]; then
     exit 1
 fi
 
-dnf install mysql -y
-if [ $? -ne 0 ]; then
-    echo "ERROR:: Installation of mysql is failed"
-else
-    echo "Installation of mysql is successful"
+VALIDATE(){
+    if [ $? -ne 0 ]; then
+        echo "ERROR:: Installation of mysql is failed"
+    else
+        echo "Installation of mysql is successful"
 fi
+}
+
+dnf install mysql -y
+VALIDATE 
+
 
