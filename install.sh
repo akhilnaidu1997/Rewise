@@ -34,6 +34,7 @@ do
     if [ $? -ne 0 ]; then
         dnf install $1 -y &>> $LOG_FILE
         VALIDATE $? "$1"
+        exit 1
     else
         echo -e "$1 is already $Y installed $N"
     fi
