@@ -1,5 +1,9 @@
 #!/bin/bash
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 
 USER=$(id -u)
 if [ $USER -ne 0 ]; then
@@ -29,7 +33,7 @@ if [ $? -ne 0 ]; then
     dnf install mysql -y &>> $LOG_FILE
     VALIDATE $? "mysql"
 else
-    echo "mysql is already installed"
+    echo "mysql is already $Y installed $N"
 fi
 
 dnf list installed nginx &>> $LOG_FILE
@@ -37,7 +41,7 @@ if [ $? -ne 0 ]; then
     dnf install nginx -y &>> $LOG_FILE
     VALIDATE $? "nginx"
 else
-    echo "nginx is already installed"
+    echo "nginx is already $Y installed $N"
 fi
 
 dnf list installed python3 &>> $LOG_FILE
@@ -45,5 +49,5 @@ if [ $? -ne 0 ]; then
     dnf install python3 -y &>> $LOG_FILE
     VALIDATE $? "python"
 else
-    echo "python is already installed"
+    echo "python is already $Y installed $N"
 fi
