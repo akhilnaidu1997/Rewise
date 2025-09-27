@@ -24,7 +24,7 @@ VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "Installation of $2 $R failed $N"
     else
-        echo -e " $2 is already $Y installed $N" | tee -a $LOG_FILE
+        echo -e " $2 is  $Y Successful $N" | tee -a $LOG_FILE
 fi
 }
 
