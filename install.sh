@@ -31,7 +31,7 @@ VALIDATE(){
 for PACKAGE in $@
 do
     dnf list installed $1 &>> $LOG_FILE 
-    if [ $1 -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         dnf install $1 -y &>> $LOG_FILE
         VALIDATE $? "$1"
     else
