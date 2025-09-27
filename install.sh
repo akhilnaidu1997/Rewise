@@ -16,11 +16,26 @@ VALIDATE(){
 
 }
 
-dnf install mysql -y
-VALIDATE $? "mysql"
+dnf list installed mysql
+if [ $? -ne 0 ]; then
+    dnf install mysql -y
+    VALIDATE $? "mysql"
+else
+    echo "mysql is already installed"
+fi
 
-dnf install nginx -y
-VALIDATE $? "nginx"
+dnf list installed nginx
+if [ $? -ne 0 ]; then
+    dnf install nginx -y
+    VALIDATE $? "nginx"
+else
+    echo "nginx is already installed"
+fi
 
-dnf install python3 -y
-VALIDATE $? "python"
+dnf list installed python
+if [ $? -ne 0 ]; then
+    dnf install python3 -y
+    VALIDATE $? "python"
+else
+    echo "python is already installed"
+fi
