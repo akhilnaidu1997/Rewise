@@ -30,13 +30,12 @@ VALIDATE(){
 
 for PACKAGE in $@
 do
-    dnf list installed $1 &>> $LOG_FILE 
+    dnf list installed $PACKAGE &>> $LOG_FILE 
     if [ $? -ne 0 ]; then
-        dnf install $1 -y &>> $LOG_FILE
-        VALIDATE $? "$1"
-        exit 1
+        dnf install $PACKAGE -y &>> $LOG_FILE
+        VALIDATE $? "$PACKAGE"
     else
-        echo -e "$1 is already $Y installed $N"
+        echo -e "$PACKAGE is already $Y installed $N"
     fi
 
 done
