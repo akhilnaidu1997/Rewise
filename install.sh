@@ -28,26 +28,14 @@ VALIDATE(){
 
 }
 
-dnf list installed mysql &>> $LOG_FILE 
-if [ $? -ne 0 ]; then
-    dnf install mysql -y &>> $LOG_FILE
-    VALIDATE $? "mysql"
-else
-    echo -e "mysql is already $Y installed $N"
-fi
+for PACKAGE in $@
+do
+    dnf list installed $1 &>> $LOG_FILE 
+    if [ $1 -ne 0 ]; then
+        dnf install $1 -y &>> $LOG_FILE
+        VALIDATE $? "$1"
+    else
+        echo -e "$1 is already $Y installed $N"
+    fi
 
-dnf list installed nginx &>> $LOG_FILE
-if [ $? -ne 0 ]; then
-    dnf install nginx -y &>> $LOG_FILE
-    VALIDATE $? "nginx"
-else
-    echo -e "nginx is already $Y installed $N"
-fi
-
-dnf list installed python3 &>> $LOG_FILE
-if [ $? -ne 0 ]; then
-    dnf install python3 -y &>> $LOG_FILE
-    VALIDATE $? "python"
-else
-    echo -e "python is already $Y installed $N"
-fi
+done
