@@ -22,7 +22,7 @@ VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "Installation of $2 $R failed $N"
     else
-        echo -e " $2 is already $Y installed $N"
+        echo -e " $2 is already $Y installed $N" | tee -a $LOG_FILE
 fi
 }
 
@@ -48,5 +48,5 @@ if [ $? -ne 0 ]; then
     dnf install python3 -y &>>LOG_FILE
     VALIDATE $? "PYTHON"
 else
-    echo -e "PYTHON already $Y installed $N"
+    echo -e " PYTHON already $Y installed $N"
 fi
