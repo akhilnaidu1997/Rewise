@@ -13,6 +13,8 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOG_FOLDER
 
+echo " Scriptb started executing at : $(date)"
+
 if [ $USER -ne 0 ]; then
     echo -e "Please proceed with $R sudo permissions $N"
     exit 1
