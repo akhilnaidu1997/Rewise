@@ -32,7 +32,7 @@ VALIDATE(){
 fi
 }
 
-cp $PWD/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "Creating a local repo"
 
 dnf install rabbitmq-server -y &>> $LOG_FILE
