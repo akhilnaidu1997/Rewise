@@ -59,7 +59,7 @@ VALIDATE $? "Deleting the existing code"
 unzip /tmp/shipping.zip &>> $LOG_FILE
 VALIDATE $? " Unzipping in /app"
 
-mvn clean package $LOG_FILE
+mvn clean package &>> $LOG_FILE
 VALIDATE $? "Building the package"
 
 mv target/shipping-1.0.jar shipping.jar 
