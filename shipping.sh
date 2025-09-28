@@ -65,6 +65,8 @@ VALIDATE $? "Building the package"
 mv target/shipping-1.0.jar shipping.jar 
 VALIDATE $? "Copying the package into /app"
 
+cp $SCRIPT_DIR/shippping.service /etc/systemd/system/shipping.service
+
 systemctl daemon-reload
 
 systemctl enable shipping &>> $LOG_FILE
