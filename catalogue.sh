@@ -78,8 +78,12 @@ VALIDATE $? "Copy repo file into local repos"
 dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host $MONGOHOST </app/db/master-data.js &>> $LOG_FILE
-VALIDATE $? "Connecting to mongodb and loading schema"
-
+INDEX=$(mongosh mongodb.daws86s-akhil.shop --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
+if [ $INDEX -lt 0 ]; then
+    mongosh --host $MONGOHOST </app/db/master-data.js &>> $LOG_FILE
+    VALIDATE $? "Connecting to mongodb and loading schema"
+else
+    echo "collections already exists"
+fi
 systemctl restart catalogue
 VALIDATE $? "Restart service"
