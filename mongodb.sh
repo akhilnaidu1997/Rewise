@@ -13,7 +13,7 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOG_FOLDER
 
-echo " Scriptb started executing at : $(date)"
+echo " Script started executing at : $(date)"
 
 if [ $USER -ne 0 ]; then
     echo -e "Please proceed with $R sudo permissions $N"
@@ -22,20 +22,25 @@ fi
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "Installation of $2 $R failed $N"
+        echo -e "$2 $R failed $N"
     else
         echo -e " $2 is  $Y Successful $N" | tee -a $LOG_FILE
 fi
 }
 
-for PACKAGE in $@
-do
-    dnf list installed $PACKAGE &>> $LOG_FILE 
-    if [ $? -ne 0 ]; then
-        dnf install $PACKAGE -y &>> $LOG_FILE 
-        VALIDATE $? "$PACKAGE"
-    else
-        echo -e "$PACKAGE already $Y installed $N" | tee -a $LOG_FILE
-fi
-done
+cp mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "Adding repo"
+
+dnf list installed mongodb-org
+VALIDATE $? "Installing mongodb"
+
+systemctl enable mongod 
+systemctl start mongod 
+VALIDATE $? "Starting mongodb"
+
+sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mongod.conf
+VALIDATE $? "Giving remote access for mongodb"
+
+systemctl restart mongod
+VALIDATE $? "Restarted mongodb"
 
