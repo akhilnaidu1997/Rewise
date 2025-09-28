@@ -62,7 +62,7 @@ VALIDATE $? " Unzipping in /app"
 mvn clean package $LOG_FILE
 VALIDATE $? "Building the package"
 
-mvn target/shipping-1.0.jar shipping.jar 
+mv target/shipping-1.0.jar shipping.jar 
 VALIDATE $? "Copying the package into /app"
 
 systemctl daemon-reload
