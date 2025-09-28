@@ -57,6 +57,9 @@ VALIDATE $? "downloading into temp directory"
 cd /app
 VALIDATE $? "cd into /app"
 
+rm -rf /app/*
+VALIDATE $? "Removing exisiting code"
+
 unzip /tmp/catalogue.zip &>> $LOG_FILE
 VALIDATE $? "Unzip into /app"
 
