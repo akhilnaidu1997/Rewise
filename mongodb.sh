@@ -32,7 +32,7 @@ fi
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Adding repo"
 
-dnf list installed mongodb-org
+dnf install mongodb-org -y
 VALIDATE $? "Installing mongodb"
 
 systemctl enable mongod 
