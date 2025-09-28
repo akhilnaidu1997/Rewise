@@ -68,7 +68,6 @@ VALIDATE $? "Copying the package into /app"
 systemctl daemon-reload
 
 systemctl enable shipping &>> $LOG_FILE
-systemctl start shipping
 VALIDATE $? "Enabling and starting the app"
 
 dnf install mysql -y  &>> $LOG_FILE
