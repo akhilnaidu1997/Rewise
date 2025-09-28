@@ -41,6 +41,9 @@ VALIDATE $? "Enabling mysql server"
 systemctl start mysqld
 VALIDATE $? "Starting mysql server"
 
+mysql_secure_installation --set-root-pass RoboShop@1
+VALIDATE $? "Setting root password"
+
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$(($END_TIME - $SCRIPT_TIME))
