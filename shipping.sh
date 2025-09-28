@@ -41,18 +41,18 @@ if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
     VALIDATE $? "Setting up user"
 else
-    echo "User already exists"
+    echo " User already exists"
 fi
 
 mkdir -p /app 
 VALIDATE $? "Creating /app directory"
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>> $LOG_FILE
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>> $LOG_FILE
 VALIDATE $? "downloading to tmp dir"
 
 cd /app 
 unzip /tmp/shipping.zip &>> $LOG_FILE
-VALIDATE $? "Unzipping in /app"
+VALIDATE $? " Unzipping in /app"
 
 mvn clean package $LOG_FILE
 VALIDATE $? "Building the package"
