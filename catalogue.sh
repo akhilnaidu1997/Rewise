@@ -10,6 +10,8 @@ USER=$(id -u)
 LOG_FOLDER="/var/log/shell-practice"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
+MONGOHOST="mongodb.daws86s-akhil.shop"
+SCRIPT_DIR=$PWD 
 
 mkdir -p $LOG_FOLDER
 
@@ -49,31 +51,32 @@ fi
 mkdir -p /app
 VALIDATE $? "Creating a directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 VALIDATE $? "downloading into temp directory"
 
 cd /app
 VALIDATE $? "cd into /app"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOG_FILE
 VALIDATE $? "Unzip into /app"
 
 npm install &>> $LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp /home/ec2-user/Rewise/catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Copying service file into systemd dir"
 
 systemctl daemon-reload
 VALIDATE $? " Daemon reload"
 
-cp /home/ec-user/Rewise/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Copy repo file into local repos"
 
 dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host mongodb.daws86s-akhil.shop </app/db/master-data.js
+mongosh --host $MONGOHOST </app/db/master-data.js
 VALIDATE $? "Connecting to mongodb and loading schema"
 
-
+systemctl restart catalogue
+VALIDATE $? "Restart service"
