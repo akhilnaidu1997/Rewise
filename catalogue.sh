@@ -29,21 +29,21 @@ VALIDATE(){
 fi
 }
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOG_FILE
 VALIDATE $? "Disable default version of nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $LOG_FILE
 VALIDATE $? "Enable version 20"
 
-dnf install nodejs -y
+dnf install nodejs -y &>> $LOG_FILE
 VALIDATE $? "Installing Nodejs"
 
-id roboshop
+id roboshop &>> $LOG_FILE
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
     VALIDATE $? "Adding user"
 else
-    echo "User already exists"
+    echo "User already exists" 
 fi
 
 mkdir /app
@@ -58,10 +58,10 @@ VALIDATE $? "cd into /app"
 unzip /tmp/catalogue.zip
 VALIDATE $? "Unzip into /app"
 
-npm install
+npm install &>> $LOG_FILE
 VALIDATE $? "Installing dependencies"
 
-cp /home/ec-user/Rewise/catalogue.service /etc/systemd/system/catalogue.service
+cp /home/ec2-user/Rewise/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "Copying service file into systemd dir"
 
 systemctl daemon-reload
@@ -70,7 +70,7 @@ VALIDATE $? " Daemon reload"
 cp /home/ec-user/Rewise/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "Copy repo file into local repos"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
 mongosh --host mongodb.daws86s-akhil.shop </app/db/master-data.js
