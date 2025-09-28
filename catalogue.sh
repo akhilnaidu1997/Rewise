@@ -78,7 +78,7 @@ VALIDATE $? "Copy repo file into local repos"
 dnf install mongodb-mongosh -y &>> $LOG_FILE
 VALIDATE $? "Installing mongodb client"
 
-mongosh --host $MONGOHOST </app/db/master-data.js
+mongosh --host $MONGOHOST </app/db/master-data.js &>> $LOG_FILE
 VALIDATE $? "Connecting to mongodb and loading schema"
 
 systemctl restart catalogue
