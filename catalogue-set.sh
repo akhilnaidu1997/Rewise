@@ -2,7 +2,7 @@
 
 set -eou pipefail
 
-trap "Error occured in line $LINENO and Command $BASH_COMMAND " ERR
+trap "echo "Error occured in line $LINENO and Command $BASH_COMMAND" " ERR
 
 R="\e[31m"
 G="\e[32m"
