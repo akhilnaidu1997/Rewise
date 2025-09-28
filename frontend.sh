@@ -44,9 +44,6 @@ VALIDATE $? "Install nginx"
 systemctl enable nginx  &>> $LOG_FILE
 VALIDATE $? "Enable nginx"
 
-systemctl start nginx 
-VALIDATE $? "Start nginx"
-
 rm -rf /usr/share/nginx/html/*  &>> $LOG_FILE
 VALIDATE $? " Remove the exisiting code"
 
